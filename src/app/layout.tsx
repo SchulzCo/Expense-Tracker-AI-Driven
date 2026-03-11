@@ -6,8 +6,8 @@ import "./globals.css";
 const geist = Geist({ variable: "--font-geist", subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Expense Tracker - OCR",
-  description: "Rastreador de gastos con OCR",
+  title: "Facturaciones Pro - OCR Inteligente",
+  description: "Gestión inteligente de gastos y facturas con IA",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

@@ -32,8 +32,16 @@ class User(UserBase):
 
 class ExpenseBase(BaseModel):
     amount: float
+    tax_amount: Optional[float] = 0.0
+    net_amount: Optional[float] = 0.0
+    other_taxes: Optional[float] = 0.0
+    vendor: Optional[str] = None
+    receipt_number: Optional[str] = None
+    payment_method: Optional[str] = None
+    status: Optional[str] = "Pagado"
     description: str
     date: datetime = datetime.now()
+    due_date: Optional[datetime] = None
     receipt_url: Optional[str] = None
     ocr_text: Optional[str] = None
     category_id: str
@@ -45,6 +53,7 @@ class Expense(ExpenseBase):
     id: str
     user_uid: str
     created_at: datetime
+    category: Optional[Category] = None
 
     class Config:
         from_attributes = True
@@ -62,6 +71,7 @@ class Budget(BudgetBase):
     id: str
     user_uid: str
     created_at: datetime
+    category: Optional[Category] = None
 
     class Config:
         from_attributes = True
@@ -76,6 +86,7 @@ class CategorizeResponse(BaseModel):
 class ExpenseStats(BaseModel):
     total: float
     prevTotal: float
+    totalBudget: float = 0.0
     count: int
     byCategory: List[dict]
     dailyTotals: List[dict]
@@ -84,3 +95,11 @@ class ExpenseStats(BaseModel):
     recentExpenses: List[Expense]
     allTimeRecent: List[Expense]
     topExpense: Optional[dict] = None
+
+class CurrencyRates(BaseModel):
+    base_code: str
+    rates: dict
+    time_last_update_utc: str
+    time_next_update_utc: str
+class BatchDeleteRequest(BaseModel):
+    ids: List[str]
